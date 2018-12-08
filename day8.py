@@ -1,6 +1,6 @@
 
 with open('data/day8.txt', 'r') as f:
-    mess = [int(i) for line in f for i in line.split()]
+    mess = [int(i) for line in f for i in line.strip().split()]
 
 
 class Node(object):
@@ -10,21 +10,15 @@ class Node(object):
         self.value = 0
 
 
-def pop_first(l):
-    r = l[0]
-    l.remove(r)
-    return r
-
-
 def build_tree(data, tree=None):
     tree = tree or Node()
-    children = pop_first(data)
-    metadata = pop_first(data)
+    children = data.pop(0)
+    metadata = data.pop(0)
     for _ in xrange(children):
         tree.children.append(build_tree(data))
 
     for _ in xrange(metadata):
-        tree.meta.append(pop_first(data))
+        tree.meta.append(data.pop(0))
 
     return tree
 
